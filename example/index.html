@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>simple virtual dom example</title>
+  </head>
+
+  <body>
+
+  </body>
+
+  <script src="../dist/boundle.js"></script>
+  <script>
+var ul1 = vm('ul', {key: 'ul1', style: {color: 'red'}}, [
+    vm('li', ['hahahah1']),
+    vm('li', ['hahahah2']),
+    vm('li', ['hahahah3'])
+])
+var ul2 = vm('ul', {key: 'ul1', style: {color: 'green', 'background': 'pink'}}, [
+    vm('li', ['hahahah2']),
+    vm('li', ['hahahah1']),
+    vm('li', ['hahahah3']),
+    vm('li', ['hahahah3']),
+])
+let root = ul1.render();
+
+document.querySelector('body').appendChild(root);
+let patches = diff(ul1, ul2);
+patch(root, patches);
+
+
+  </script>
+
+</html>
