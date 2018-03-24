@@ -11,12 +11,13 @@ function Element (tagName, props, children) {
     this.key = props ? props.key : void 0;
 
     let count = 0;
-    for(let i = 0; i < children.length; i++){
+    for(let i = 0; i < this.children.length; i++){
         if(children[i] instanceof Element) {
-            count++;
+            count = children[i].count + 1;
         }
         else {
             children[i] = '' + children;
+            count++;
         }
     }
     this.count = count;

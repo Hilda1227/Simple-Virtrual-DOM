@@ -1,34 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>虚拟DOM栗子</title>
+</head>
+<body>
+  
+</body>
+<script src="../dist/boundle.js"></script>
+<script>
+  let colors = ['#e8bbc5', '#fb6b8f', '#cfbaaa', '#bdcddf', '#aaa', '#77dcc0'],
+      count = 0;
+  let tree = vm('div', [
+        vm('h1', {style: { color: colors[0] }}, ['Virtual DOM~']),
+        vm('ul', [])
+      ]);
+  let root = tree.render();
+  document.body.appendChild(root);
 
-<html>
-  <head>
-    <title>simple virtual dom example</title>
-  </head>
+  setInterval(function () {
+    let list = [];
+    count++;
+    for(let i = 1; i <= count; i++){
+      list.push(vm('li', ['this is item' + i]));
+    }
 
-  <body>
+    let newTree = vm('div', [
+        vm('h1', {style: {color: colors[count % 6]}}, ['Virtual DOM~']),
+        vm('ul', list)
+    ]);
+    let patches = diff(tree, newTree);
+    patch(root, patches);
+    tree = newTree;
+  }, 1000)
 
-  </body>
-
-  <script src="../dist/boundle.js"></script>
-  <script>
-var ul1 = vm('ul', {key: 'ul1', style: {color: 'red'}}, [
-    vm('li', ['hahahah1']),
-    vm('li', ['hahahah2']),
-    vm('li', ['hahahah3'])
-])
-var ul2 = vm('ul', {key: 'ul1', style: {color: 'green', 'background': 'pink'}}, [
-    vm('li', ['hahahah2']),
-    vm('li', ['hahahah1']),
-    vm('li', ['hahahah3']),
-    vm('li', ['hahahah3']),
-])
-let root = ul1.render();
-
-document.querySelector('body').appendChild(root);
-let patches = diff(ul1, ul2);
-patch(root, patches);
-
-
-  </script>
-
+</script>
 </html>

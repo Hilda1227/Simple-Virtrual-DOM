@@ -52,7 +52,6 @@ function reorderChildren (node, moves) {
     let nodeList = node.childNodes;
     moves.forEach(function (move) {
         if(move.type === 0) {
-            console.log('node',node)
             node.removeChild(nodeList[move.index])
         } else if (move.type === 1) {
             let insertNode = typeof move.item === 'string'
